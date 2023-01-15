@@ -1,0 +1,12 @@
+build:
+  tags: [ local-gitlab-dev ]
+  stage: build
+  rules:
+    - if: '$CI_COMMIT_TAG || $CI_COMMIT_BRANCH'
+    - if: $TARGETTASKNAME
+      when: never
+  script:
+    - make all
+  artifacts:
+    paths:
+      - hello

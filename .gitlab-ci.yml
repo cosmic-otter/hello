@@ -10,20 +10,6 @@ stages:
   - sync
   - build
 
-sync_upstream:
-  stage: sync
-  script:
-    - git remote add upstream https://github.com/cosmic-otter/hello.git
-    - git fetch upsteam
-    - git merge upsteam/main
-  schedule:
-    - cron: "/15 * * * *"
-
-build:
-  tags: [ local-gitlab-dev ]
-  stage: build
-  script:
-    - make all
-  artifacts:
-    paths:
-      - hello
+include:
+  - local: 'configs/sync.yaml'
+  - local: 'configs/build.yaml'

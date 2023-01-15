@@ -1,0 +1,14 @@
+sync:
+  tags: [ local-gitlab-dev ]
+  stage: sync
+  # rules:
+  #   - if: '$TARGETTASKNAME== "sync-task"'
+  script:
+    - git config --global user.email "srv@hrl.internal"
+    - git config --global user.name "Service Account"
+    - git fetch upstream
+    - git pull upstream main
+    - git add -A
+    - git commit -m "sync upstream"
+    - git merge upstream/main
+    - git push origin master
