@@ -1,13 +1,13 @@
 sync:
   tags: [ local-gitlab-dev ]
   stage: sync
-  # rules:
-  #   - if: '$TARGETTASKNAME== "sync-task"'
+  rules:
+    - if: '$TARGETTASKNAME== "sync-task"'
   script:
     - git config --global user.email "srv@hrl.internal"
     - git config --global user.name "Service Account"
     - git config --global pull.ff only
-    # - git remote add upstream https://github.com/cosmic-otter/hello.git
+    - git remote add upstream https://github.com/cosmic-otter/hello.git || true
     - git fetch upstream
     - git pull upstream main
     - git add -A
@@ -15,4 +15,4 @@ sync:
       if ! git diff --quiet origin/master --name-only; then \
         git commit -m "sync upstream" \
         && git push -u origin master; \
-      fi
+      fi 
