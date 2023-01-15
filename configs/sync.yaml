@@ -12,7 +12,5 @@ sync:
     - git pull upstream main
     - |
       if ! git diff --quiet origin/master --name-only; then \
-        git add -A \
-        && git commit -m "sync upstream" \
         && git push -u origin master; \
       fi 
