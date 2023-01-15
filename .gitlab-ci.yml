@@ -6,10 +6,18 @@ variables:
 services:
   - docker:18.09.7-dind
 
-
 stages:
+  - sync
   - build
-  - package
+
+sync_upstream:
+  stage: sync
+  script:
+    - git remote add upstream https://github.com/cosmic-otter/hello.git
+    - git fetch upsteam
+    - git merge upsteam/main
+  schedule:
+    - cron: "/15 * * * *"
 
 build:
   tags: [ local-gitlab-dev ]
