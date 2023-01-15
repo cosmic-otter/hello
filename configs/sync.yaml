@@ -10,9 +10,9 @@ sync:
     - git remote add upstream https://github.com/cosmic-otter/hello.git || true
     - git fetch upstream
     - git pull upstream main
-    - git add -A
     - |
       if ! git diff --quiet origin/master --name-only; then \
-        git commit -m "sync upstream" \
+        git add -A \
+        && git commit -m "sync upstream" \
         && git push -u origin master; \
       fi 
