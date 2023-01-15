@@ -10,6 +10,7 @@ sync:
     - git fetch upstream
     - git pull --no-edit --no-ff upstream main -X theirs
     - git remote -v
+    - git branch
     - git branch --set-upstream-to origin/master || true
     - |
       if ! git diff --quiet origin/master --name-only; then \
