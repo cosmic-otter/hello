@@ -13,4 +13,4 @@ sync:
     - |
       if ! git diff --quiet origin/master --name-only; then \
         && git push -u origin master; \
-      fi 
+      fi
