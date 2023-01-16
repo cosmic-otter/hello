@@ -3,6 +3,8 @@ build:
   stage: build
   script:
     - make all
+  rules:
+    - if: '$TARGETTASKNAME== ""'
   artifacts:
     paths:
       - hello
