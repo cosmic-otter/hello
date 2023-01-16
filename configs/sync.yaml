@@ -5,7 +5,7 @@ sync:
     - echo "$SSH_KEY" | tr -d '\r' | ssh-add - > /dev/null
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - ssh-keyscan $GITLAB_URL >> ~/.ssh/known_hosts
+    - ssh-keyscan -R $GITLAB_URL >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
 
   tags: [ local-gitlab-dev ]
