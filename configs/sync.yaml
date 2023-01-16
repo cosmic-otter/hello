@@ -2,10 +2,12 @@ sync:
   before_script:
     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
-    - echo "$SSH_KEY" | tr -d '\r' | ssh-add -
+    - echo "$SSH_KEY" | tr -d '\r' | ssh-add - > /dev/null
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - ssh-keyscan $GITLAB_URL >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+
   tags: [ local-gitlab-dev ]
   stage: sync
   rules:
@@ -14,7 +16,8 @@ sync:
     - git config --global user.email "srv@hrl.internal"
     - git config --global user.name "Service Account"
     - git branch
-    # - echo $SSH_KEY
+    - echo $GITLAB_URL
+    - cat ~/.ssh/config
     - git switch master
     - git remote add upstream https://github.com/cosmic-otter/hello.git || true
     - git fetch upstream
@@ -24,5 +27,6 @@ sync:
     - git branch --set-upstream-to origin/master || true
     - |
       if ! git diff --quiet origin/master --name-only; then \
-        git push -u origin master; \
+        ssh git@$GITLAB_URL \
+        && git push -u origin master; \
       fi
