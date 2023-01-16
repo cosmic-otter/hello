@@ -22,6 +22,7 @@ sync:
     - git checkout master
     - git merge mergebranch
     - git remote set-url origin git@repo.dev.hrl.internal:root/hello.git
+    - git remote -vv
     # - git branch --set-upstream-to origin/master || true
     - |
       if ! git diff --quiet origin/master --name-only; then \
