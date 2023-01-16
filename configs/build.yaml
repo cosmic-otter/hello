@@ -4,7 +4,7 @@ build:
   script:
     - make all
   rules:
-    - if: '$TARGETTASKNAME== ""'
+    - if: '$TARGETTASKNAME!= ""'
   artifacts:
     paths:
       - hello
