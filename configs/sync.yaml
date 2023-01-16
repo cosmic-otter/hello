@@ -17,12 +17,12 @@ sync:
     - git branch
     - git branch --all -vv
     - git remote -vv
-    - git checkout master
     - git remote add upstream https://github.com/cosmic-otter/hello.git || true
+    - git branch --set-upstream-to origin/master || true
+    - git switch master
     - git fetch upstream
     - git pull --no-edit --no-ff upstream main -X theirs
     - git branch
-    - git branch --set-upstream-to origin/master || true
     - |
       if ! git diff --quiet origin/master --name-only; then \
         git -c core.sshCommand='ssh -o StrictHostKeyChecking=accept-new' push -u origin master; \
