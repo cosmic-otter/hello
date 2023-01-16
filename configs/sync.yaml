@@ -1,12 +1,9 @@
 sync:
   before_script:
-    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
-    - eval $(ssh-agent -s)
-    - echo "$SSH_KEY" | tr -d '\r' | ssh-add - > /dev/null
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - ssh-keyscan -R $GITLAB_URL >> ~/.ssh/known_hosts
-    - chmod 644 ~/.ssh/known_hosts
+    - echo "$SSH_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
 
   tags: [ local-gitlab-dev ]
   stage: sync
@@ -27,6 +24,5 @@ sync:
     - git branch --set-upstream-to origin/master || true
     - |
       if ! git diff --quiet origin/master --name-only; then \
-        ssh git@$GITLAB_URL \
-        && git push -u origin master; \
+        git -c core.sshCommand='ssh -o StrictHostKeyChecking=accept-new' push -u origin master; \
       fi
