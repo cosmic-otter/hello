@@ -21,6 +21,7 @@ sync:
     - git pull --no-edit --no-ff upstream main -X theirs
     - git checkout master
     - git merge mergebranch
+    - git remote set-url origin git@repo.dev.hrl.internal:root/hello.git
     # - git branch --set-upstream-to origin/master || true
     - |
       if ! git diff --quiet origin/master --name-only; then \
