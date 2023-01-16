@@ -15,7 +15,9 @@ sync:
     - git branch --all
     - git remote -vv
     - git checkout -b mergebranch
+    - git branch --all
     - git remote add upstream https://github.com/cosmic-otter/hello.git || true
+    - git fetch upstream
     - git pull --no-edit --no-ff upstream main -X theirs
     - git checkout master
     - git merge mergebranch
