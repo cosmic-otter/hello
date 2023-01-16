@@ -13,8 +13,6 @@ sync:
     - git config --global user.email "srv@hrl.internal"
     - git config --global user.name "Service Account"
     - git branch
-    - echo $GITLAB_URL
-    - cat ~/.ssh/config
     - git switch master
     - git remote add upstream https://github.com/cosmic-otter/hello.git || true
     - git fetch upstream
